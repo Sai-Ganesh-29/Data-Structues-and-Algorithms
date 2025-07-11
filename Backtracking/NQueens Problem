@@ -1,0 +1,57 @@
+class Solution {
+    public boolean isValid(char[][] mat,int i,int j,int n){
+        for(int k = 0;k<n;k++){
+            if(mat[k][j] == 'Q'){
+                return false;
+            }
+        }
+        int x = i,y = j;
+        while(x>0 && y>0){
+            if(mat[x-1][y-1] == 'Q'){
+                return false;
+            }
+            x--;
+            y--;
+        }
+        x = i;
+        y = j;
+        while(x>0 && y<n-1){
+            if(mat[x-1][y+1] == 'Q'){
+                return false;
+            }
+            x--;
+            y++;
+        }
+        return true;
+    }
+    public void helper(char [][] mat,int i,int n,List<List<String>> ans){
+        if(i == n){
+            List<String> l = new ArrayList<>();
+            for(int k=0;k<n;k++){
+                l.add(new String(mat[k]));
+            }
+            ans.add(l);
+            return ;
+        }
+        for(int j=0;j<n;j++){
+            if(isValid(mat,i,j,n)){
+                mat[i][j] = 'Q';
+                helper(mat,i+1,n,ans);
+                mat[i][j] = '.';
+            }
+        }
+        return;
+    }
+    public List<List<String>> solveNQueens(int n) {
+        char mat[][] = new char[n][n];
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                mat[i][j] = '.';
+            }
+        }
+        List<List<String>> ans = new ArrayList<>();
+        helper(mat,0,n,ans);
+        return ans;
+    }
+
+}
