@@ -1,0 +1,51 @@
+class Solution {
+    public boolean isValid(char[][] board,int i,int j,char id){
+        for(int x = 0;x<9;x++){
+            if(board[x][j] == id){
+                return false;
+            }
+        }
+        for(int x = 0;x<9;x++){
+            if(board[i][x] == id){
+                return false;
+            }
+        }
+        int x = (i/3)*3;
+        int y = (j/3)*3;
+        for(int k=x;k<x+3;k++){
+            for(int l=y;l<y+3;l++){
+                if(board[k][l] == id){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    public boolean helper(char[][] board,int i,int j){
+        if(j == 9 && i<9){
+            j = 0;
+            i = i+1;
+        }
+        if(i == 9 ){
+            return true;
+        }
+        if(board[i][j] != '.'){
+            return helper(board,i,j+1);
+        }
+        for(int id=1;id<=9;id++){
+            if(isValid(board,i,j,(char)(id+'0'))){
+                board[i][j] = (char)(id+'0');
+                boolean res = helper(board,i,j+1);
+                if(res){
+                    return true;
+                }
+                board[i][j] = '.';
+            }
+        }
+        return false;
+    }
+    public void solveSudoku(char[][] board) {
+        helper(board,0,0);
+        return;
+    }
+}
