@@ -1,0 +1,20 @@
+class Solution {
+    public void solve(List<String> ans,int o,int c,String temp){
+        if(o == 0 && c == 0){
+            ans.add(temp);
+            return;
+        }
+        if(o>=0){
+            solve(ans,o-1,c,temp+"(");
+        }
+        if(o<c){
+            solve(ans,o,c-1,temp+")");
+        }
+        return ;
+    }
+    public List<String> generateParenthesis(int n) {
+        List<String> ans = new ArrayList<>();
+        solve(ans,n,n,"");
+        return ans;
+    }
+}
