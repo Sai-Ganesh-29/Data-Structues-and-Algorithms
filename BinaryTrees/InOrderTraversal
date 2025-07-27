@@ -1,0 +1,46 @@
+//Recursive
+
+class Solution {
+    public void helper(List<Integer> ans,TreeNode root){
+        if(root == null){
+            return;
+        } 
+        helper(ans,root.left);
+        ans.add(root.val);
+        helper(ans,root.right);
+        return;
+    }
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> ans = new ArrayList<>();
+        helper(ans,root);
+        return ans;
+    }
+}
+
+//Iterative
+
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> ans = new ArrayList<>();
+        Stack<TreeNode> s = new Stack<>();
+        if(root == null) {
+            return ans;
+        }
+        TreeNode x = root;
+        while(true){
+            if(x!=null){
+                s.push(x);
+                x = x.left;
+            }
+            else{
+                if(s.isEmpty()){
+                    break;
+                }
+                x = s.pop();
+                ans.add(x.val);
+                x = x.right;
+            }
+        }
+        return ans;
+    } 
+}
